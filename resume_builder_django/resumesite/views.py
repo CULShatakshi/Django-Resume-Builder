@@ -1,67 +1,56 @@
 from django.shortcuts import render
-from .forms import ContactForm
+from .forms import ContactForm, FormalForm
 
 def home(request):
 	return render(request, 'home.html', {})
+def homepage(request):
+	return render(request, 'homepage.html', {})
 
 def info(request):
 	form=ContactForm()
 	if request.method == 'POST':
 		form=ContactForm(request.POST)
 		if form.is_valid():
-			name=form.cleaned_data['name']
-			email=form.cleaned_data['email']
+			event_name=form.cleaned_data['event_name']
+			event_date=form.cleaned_data['event_date']
 
-			skills_1=form.cleaned_data['skills_1']
-			skills_2=form.cleaned_data['skills_2']
-			skills_3=form.cleaned_data['skills_3']
-			skills_4=form.cleaned_data['skills_4']
+			introduction=form.cleaned_data['introduction']
+			main_body=form.cleaned_data['introduction']
+			conclusion=form.cleaned_data['introduction']
+			
 
-			mobile=form.cleaned_data['mobile']
-			address=form.cleaned_data['address']
+			data={'event_name':event_name}
+			data['event_date']=event_date
+			data['introduction']=introduction
+			data['main_body']=main_body
+			data['conclusion']=conclusion
 
-			experience_1_title=form.cleaned_data['experience_1_title']
-			experience_1_dur=form.cleaned_data['experience_1_dur']
-			experience_1_desc=form.cleaned_data['experience_1_desc']
-
-			experience_2_title=form.cleaned_data['experience_2_title']
-			experience_2_dur=form.cleaned_data['experience_2_dur']
-			experience_2_desc=form.cleaned_data['experience_2_desc']
-
-			education_1=form.cleaned_data['education_1']
-			education_1_dur=form.cleaned_data['education_1_dur']
-			education1_score=form.cleaned_data['education1_score']
-
-			education_2=form.cleaned_data['education_2']
-			education_2_dur=form.cleaned_data['education_2_dur']
-			education2_score=form.cleaned_data['education2_score']
-
-			data={'name':name}
-			data['email']=email
-			data['skills_1']=skills_1
-			data['skills_2']=skills_2
-			data['skills_3']=skills_3
-			data['skills_4']=skills_4
-
-			data['mobile']=mobile
-			data['address']=address
-
-			data['experience_1_title']=experience_1_title
-			data['experience_1_dur']=experience_1_dur
-			data['experience_1_desc']=experience_1_desc
-
-			data['experience_2_title']=experience_2_title
-			data['experience_2_dur']=experience_2_dur
-			data['experience_2_desc']=experience_2_desc
-
-			data['education_1']=education_1
-			data['education_1_dur']=education_1_dur
-			data['education1_score']=education1_score
-
-			data['education_2']=education_2
-			data['education_2_dur']=education_2_dur
-			data['education2_score']=education2_score
+			
 			return render(request,'home.html',data)
+			#to add more go to : forms.py
+			# print(name,email)
+	return render(request,'info.html',{'form':form})
+def formal(request):
+	form=FormalForm()
+	if request.method == 'POST':
+		form=FormalForm(request.POST)
+		if form.is_valid():
+			event_name1=form.cleaned_data['event_name1']
+			event_date1=form.cleaned_data['event_date1']
+
+			introduction1=form.cleaned_data['introduction1']
+			main_body1=form.cleaned_data['main_body1']
+			conclusion1=form.cleaned_data['conclusion1']
+			
+
+			data={'event_name1':event_name1}
+			data['event_date1']=event_date1
+			data['introduction1']=introduction1
+			data['main_body1']=main_body1
+			data['conclusion1']=conclusion1
+
+			
+			return render(request,'formal.html',data)
 			#to add more go to : forms.py
 			# print(name,email)
 	return render(request,'info.html',{'form':form})
